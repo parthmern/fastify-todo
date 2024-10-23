@@ -9,6 +9,8 @@ fastify.addHook("onClose", function listener() {
     console.log("server is stopping now 🚫");
 });
 
+// ======================================================
+
 fastify.route({
     url:"/hello",
     method: "GET",
@@ -18,10 +20,24 @@ fastify.route({
     }
 })
 
+
+
 fastify.get("/", async (req, res) => {
     console.log("/ hitted");
     return res.send({ message: "Fastify server is up 💚" });
 });
+
+// ===================================================
+// plugin (fastify, options, done)
+
+function samplePlugin(fastify, options, done){
+    console.log("Executing my plugin 🔌");
+    fastify.decorate('key', 'value');   // attaching key:value pair into fastify object so can be accessible from anywhere in plugin
+    console.log(fastify);   // inside this obj there is key:value pair
+    done(); // donot forget 
+}
+fastify.register(samplePlugin); // how to register plugin
+
 
 const runServer = async () => {
     try {
