@@ -23,6 +23,10 @@ class TodoRepository{
 
     async getOne(id){
 
+        const todo = this.db.todos.find((todo)=> todo.id == id)
+
+        return todo;
+
     }
 
     async deleteOne(id){

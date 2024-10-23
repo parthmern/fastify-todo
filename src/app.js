@@ -11,7 +11,9 @@ async function app(fastify, options) {
     await fastify.register(todoService);
 
     await fastify.register(apiRouter, {prefix: "/api"});
-    console.log('fastify.db:', fastify.db);
+    
+    
+    //console.log('fastify.db:', fastify.db);
     
 }
 

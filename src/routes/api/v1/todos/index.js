@@ -1,4 +1,4 @@
-const { getAllTodos, createTodo } = require("../../../../controllers/todoController");
+const { getAllTodos, createTodo, getTodo } = require("../../../../controllers/todoController");
 
 
 async function todoRouter(fastify, options) {
@@ -9,6 +9,7 @@ async function todoRouter(fastify, options) {
 
     fastify.get('/allTodos', getAllTodos);
     fastify.post('/createTodo', createTodo);
+    fastify.get('/getTodo', getTodo);
 }
 
 module.exports = todoRouter; // routes donot need to convert to plugin
