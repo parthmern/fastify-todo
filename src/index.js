@@ -1,4 +1,10 @@
+const app = require("./app");
+const { PORT } = require("./config/serverConfig");
+
 const fastify = require("fastify")({ logger: false }); // root application instance (prepare whole http server for us)
+
+// ======================================================
+// life cycle event trigerring
 
 fastify.addHook("onReady", function listener(done) {
     console.log("server is ready to take req 🔄");
@@ -10,6 +16,7 @@ fastify.addHook("onClose", function listener() {
 });
 
 // ======================================================
+// routing
 
 fastify.route({
     url:"/hello",
@@ -19,8 +26,6 @@ fastify.route({
         return res.send("world");
     }
 })
-
-
 
 fastify.get("/", async (req, res) => {
     console.log("/ hitted");
@@ -38,11 +43,14 @@ function samplePlugin(fastify, options, done){
 }
 fastify.register(samplePlugin); // how to register plugin
 
+fastify.register(app);
+
+// ===================================================
 
 const runServer = async () => {
     try {
-        await fastify.listen({ port: 3000 });
-        console.log(`Server is up at http://localhost:3000 💚`);
+        await fastify.listen({ port: PORT });
+        console.log(`Server is up at http://localhost:${PORT} 💚`);
         // fastify.close(); // close server connection
     } catch (err) {
         fastify.log.error(err);
